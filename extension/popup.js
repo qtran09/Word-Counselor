@@ -1,4 +1,4 @@
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function()) {
 	var context = "selection";
 	var title = "Evaluate Emotion";
 	var id = chrome.contextMenus.create({"title": title, "contexts":[context], "id": "context" + context});  
