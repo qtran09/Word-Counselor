@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.contextMenus.onClicked.addListener(onClickHandler);
 
-function prepareAndSendMessage(emotions){
+function prepareAndSendMessage(emotions, Text){
 	var alertString = "We've detected these emotions in your selected text:\n";
 	for(x in emotions){
 		// console.log(x + " " + emotions[x] * 100);
@@ -15,25 +15,17 @@ function prepareAndSendMessage(emotions){
 	var recommend = prompt("Anger, Joy, Fear, Sadness, Surprise", "Your requested emotion");
 	var txt;
 	var emotion;
-	switch(recommend){
-		case("Anger"):
-			
-			break;
-		case("Joy"):
 
-			break;
-		case("Fear"):
-
-			break;
-		case("Sadness"):
-
-			break;
-		case("Surprise"):
-
-			break;
-		default:
-
+	wordArr = [];
+	wordArr = Text.replace(/\W/g, '').split(" ");
+	for(word in wordArr){
+		if(GetMaxWordEmotion(word) != emotion){
+			console.log("Search Thesaurus for better words");
+		}
 	}
+	console.log(alertString);
+
+
 }
 
 function onClickHandler(info, tab) {
@@ -53,7 +45,34 @@ function onClickHandler(info, tab) {
 				emotionDict[key] = value;
 			}
 		});
-		prepareAndSendMessage(emotionDict);
+		prepareAndSendMessage(emotionDict, sText);
 	});
 };
 
+
+function GetMaxWordEmotion(Text){
+	$.post(
+		'https://apiv2.indico.io/emotion',
+		JSON.stringify({
+			'api_key': "2d3c91cb08abe04e37203439107e5ad6",
+			'data': Text,
+			'threshold': 0.1
+		})
+	).then(function(res) {
+		var emotionDict = {};
+		jsonObject = JSON.parse(res, (key, value) => {
+			if(typeof value === "number"){
+				emotionDict[key] = value;
+			}
+		});
+		var maxEmotion = [0,emotions[0]];
+		for(x in emotions){
+		// console.log(x + " " + emotions[x] * 100);
+			if(emotions[x] > maxEmotion)
+				maxEmotion[0] = x
+				maxEmotion[1] = emotions[x];
+		}
+		return maxEmotion;
+	});
+
+}
