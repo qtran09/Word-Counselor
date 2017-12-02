@@ -9,6 +9,7 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 function prepareAndSendMessage(emotions, Text){
 	$.extend({
 		GetSynonyms: function(Text){
+			console.log("GetSynonyms");
 			var synList = [];
 			$.ajax({
 			    url: 'https://wordsapiv1.p.mashape.com/words/'+Text+'/synonyms',
@@ -31,6 +32,59 @@ function prepareAndSendMessage(emotions, Text){
 			return synList;
 		}
 	});
+	$.extend({
+		GetMaxWordEmotion: function(Text){
+			console.log("GetMaxWordEmotion");
+			$.ajaxSetup({
+		    async: false
+		    });
+
+		    var maxEmotion = ["",0];
+		    var mEmotion = "";
+
+		 //    $.ajax({
+			//     url: 'https://apiv2.indico.io/emotion',
+			//     type: 'get',
+			//     dataType: 'json',
+			//     contentType: 'json',
+			//     data: {
+			//         'api_key': "2d3c91cb08abe04e37203439107e5ad6",
+			//         'data': Text,
+			//         'threshold': 0.1
+			//     },
+			//     success: function (data) {
+			//     	console.info("REEEEEEEEEEEEEEEEEEEEEEEEEE");
+			//     },
+			//     async: false
+			// });
+			$.post(
+				'https://apiv2.indico.io/emotion',
+				JSON.stringify({
+					'api_key': "2d3c91cb08abe04e37203439107e5ad6",
+					'data': Text,
+					'threshold': 0.1
+				})
+			).then(function(res) {
+				var emotionDict = {};
+				jsonObject = JSON.parse(res, (key, value) => {
+					if(typeof value === "number"){
+						emotionDict[key] = value;
+					}
+				});
+				console.log(emotionDict);
+				maxEmotion = [0, emotionDict[0]];
+				for(x in emotionDict){
+				// console.log(x + " " + emotions[x] * 100);
+					if(x.length != 0 && emotionDict[x] > maxEmotion)
+						maxEmotion[0] = x;
+						maxEmotion[1] = emotionDict[x];
+				}
+				console.log(maxEmotion[0]);
+			});
+			console.log(maxEmotion[0]);
+			return maxEmotion[0];
+		}
+	});
 
 	var alertString = "We've detected these emotions in your selected text:\n";
 	for(x in emotions){
@@ -47,14 +101,17 @@ function prepareAndSendMessage(emotions, Text){
 	console.log(wordArr);
 	for (var i = 0; i < wordArr.length; i++) {
 		console.log("Spin");
-		if(GetMaxWordEmotion(wordArr[i]) != emotion){
+		if($.GetMaxWordEmotion(wordArr[i]) != emotion){
 			console.log("Search Thesaurus for better words");
 			console.log("word= "+ wordArr[i])
 			synArr = $.GetSynonyms(wordArr[i]);
 			console.log(synArr);
 
 			for (var k = 0; k < synArr.length; k++) {
-				if(GetMaxWordEmotion(synArr[k]) == emotion){
+				console.log("spin2");
+				maxE = $.GetMaxWordEmotion(synArr[k])
+				console.log("maxE:"+maxE);
+				if(maxE == emotion){
 					console.log(synArr[k] + " Instead of: " + wordArr[i]);
 				}
 			}
@@ -89,57 +146,6 @@ function onClickHandler(info, tab) {
 		prepareAndSendMessage(emotionDict, sText);
 	});
 };
-
-
-function GetMaxWordEmotion(Text){
-	$.ajaxSetup({
-    async: false
-    });
-
-    var maxEmotion = undefined;
-
-	$.post(
-		'https://apiv2.indico.io/emotion',
-		JSON.stringify({
-			'api_key': "2d3c91cb08abe04e37203439107e5ad6",
-			'data': Text,
-			'threshold': 0.1
-		})
-	).then(function(res) {
-		var emotionDict = {};
-		jsonObject = JSON.parse(res, (key, value) => {
-			if(typeof value === "number"){
-				emotionDict[key] = value;
-			}
-		});
-		maxEmotion = [0, emotionDict[0]];
-		for(x in emotionDict){
-		// console.log(x + " " + emotions[x] * 100);
-			if(emotionDict[x] > maxEmotion)
-				maxEmotion[0] = x
-				maxEmotion[1] = emotionDict[x];
-		}
-		return maxEmotion;
-	});
-
-}
-
-
-	// $.post(
-	// 	'https://wordsapiv1.p.mashape.com/words/Joy/synonyms',
-	// 	JSON.stringify({
-	// 		'X-Mashape-Key': "RBGdikllvBmshXcwx3hyEE5gIwXjp1KJuxZjsnzcGMfpfOq2Vp",
-	// 		'X-Mashape-Host': "wordsapiv1.p.mashape.com"
-	// 	})
-	// ).then(function(res) {
-	// 	var synList = [];
-	// 	jsonObject = JSON.parse(res, (key, value) => {
-	// 		if(typeof key === "number"){
-	// 			synList.push(value);
-	// 		}
-	// 	});
-	// 	return synList;
-	// });
 
 function Emotionshow(selectedValue){
 	alert(selectedValue.text);
