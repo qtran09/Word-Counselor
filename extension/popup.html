@@ -9,12 +9,13 @@
 	<span class = "slider"></span>
 	</label>
 	<p> Emotion to convey
-	<select>
-		<option value = "joy" onchange ="Emotionshow.call(this.value)">Joy</option>
-		<option value = "sad" onchange ="Emotionshow.call(this.value)">Sadness</option>
-		<option value = "surprise" onchange ="Emotionshow.call(this.value)" >Surprise</option>
-		<option value = "anger" onchange ="Emotionshow.call(this.value)">Anger</option>
-		<option value = "fear" onchange ="Emotionshow.call(this.value)">Fear</option>
+	<select onchange = "Emotionshow(this.value)" >
+		<option value = ""> Please select</option>
+		<option value = "joy">Joy</option>
+		<option value = "sad">Sadness</option>
+		<option value = "surprise">Surprise</option>
+		<option value = "anger">Anger</option>
+		<option value = "fear">Fear</option>
 	</select>
 	</p>
 </body>
