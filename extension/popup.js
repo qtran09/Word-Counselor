@@ -28,12 +28,7 @@ function onClickHandler(info, tab) {
 	    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 	        // Request finished. Do processing here.
 	        console.log("Success");
-	 //        jsonObject = JSON.parse(res, (key, value) => {
-		// 	if(typeof value === "number"){
-		// 		emotionDict[key] = value;
-		// 	}
-		// });
-	 //    prepareAndSendMessage(emotionDict);
+	        
 	    }
 	}
 
