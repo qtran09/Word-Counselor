@@ -12,7 +12,28 @@ function prepareAndSendMessage(emotions){
 		// console.log(x + " " + emotions[x] * 100);
 		alertString += x + ": " + Math.round(emotions[x] * 100) + "%\n";
 	}
-	window.alert(alertString);
+	var recommend = prompt("Anger, Joy, Fear, Sadness, Surprise", "Your requested emotion");
+	var txt;
+	var emotion;
+	switch(recommend){
+		case("Anger"):
+			
+			break;
+		case("Joy"):
+
+			break;
+		case("Fear"):
+
+			break;
+		case("Sadness"):
+
+			break;
+		case("Surprise"):
+
+			break;
+		default:
+
+	}
 }
 
 function onClickHandler(info, tab) {
