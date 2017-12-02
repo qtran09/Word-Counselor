@@ -36,3 +36,7 @@ function onClickHandler(info, tab) {
 	});
 };
 
+function Emotionshow(selectedValue){
+	alert(selectedValue.text);
+}
+
