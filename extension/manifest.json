@@ -9,7 +9,8 @@
     "activeTab",
     "contextMenus",
     "tabs",
-    "https://gateway.watsonplatform.net/tone-analyzer/api"
+    "https://gateway.watsonplatform.net/tone-analyzer/api",
+    "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21"
   ],
 
   "browser_action": {

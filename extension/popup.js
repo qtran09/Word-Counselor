@@ -19,7 +19,7 @@ function onClickHandler(info, tab) {
 	var sText = info.selectionText;
 	//Perform something with text
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21", true, "eef8b00a-96e3-4460-af7a-7e4a6873e8e7", "3RtHK2OiEx4W")
+	xhr.open("POST", "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21", true, "eef8b00a-96e3-4460-af7a-7e4a6873e8e7", "3RtHK2OiEx4W");
 
 	//Send the proper header information along with the request
 	xhr.setRequestHeader("Content-type", "application/json");
@@ -27,15 +27,22 @@ function onClickHandler(info, tab) {
 	xhr.onreadystatechange = function() {//Call a function when the state changes.
 	    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 	        // Request finished. Do processing here.
-	        jsonObject = JSON.parse(res, (key, value) => {
-			if(typeof value === "number"){
-				emotionDict[key] = value;
-			}
-		});
-	    prepareAndSendMessage(emotionDict);
+	        console.log("Success");
+	 //        jsonObject = JSON.parse(res, (key, value) => {
+		// 	if(typeof value === "number"){
+		// 		emotionDict[key] = value;
+		// 	}
+		// });
+	 //    prepareAndSendMessage(emotionDict);
 	    }
 	}
-	xhr.send(sText); 
+
+	var sdict = {
+		'text':sText
+	}
+
+	var json = JSON.stringify(sdict);
+	xhr.send(json);
 
 
  //  var xhr = new XMLHttpRequest();
