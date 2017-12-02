@@ -37,6 +37,9 @@ function onClickHandler(info, tab) {
 };
 
 function Emotionshow(selectedValue){
-	alert(selectedValue.text);
+	//var x = document.getElementById("mySelect").value;
+	document.getElementById("Emotion").innerHTML = selectedValue;
+	console.log(selectedValue);
+	return selectedValue;
 }
 
