@@ -9,9 +9,10 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 function prepareAndSendMessage(emotions){
 	var alertString = "We've detected these emotions in your selected text:\n";
 	for(x in emotions){
-		console.log(x + " " + emotions[x]);
+		// console.log(x + " " + emotions[x] * 100);
+		alertString += x + ": " + Math.round(emotions[x] * 100) + "%\n";
 	}
-	console.log("args");
+	window.alert(alertString);
 }
 
 function onClickHandler(info, tab) {
