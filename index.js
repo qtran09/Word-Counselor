@@ -1,9 +1,3 @@
-function TextScan(){
-    var strings = document.getElementById("maintext").value;
-    var text = strings.split(" ");
-    return text;
-}
-
 function getSelectionText(){
     var text = "";
     if (window.getSelection) {
@@ -16,7 +10,6 @@ function getSelectionText(){
     });
     return wordArr;
 }
-
 
 function jQueryMain(){
     $.extend({
@@ -118,7 +111,7 @@ function jQueryMain(){
 
     var recText = "";
     for(var i=0; i<sortedArr.length; i++){
-        recText += (sortedArr[i][0] + " ");
+        recText += (sortedArr[i][0] + " </br>");
     }
     console.log(recText);
     document.getElementById("RecommendationText").innerHTML = recText;
