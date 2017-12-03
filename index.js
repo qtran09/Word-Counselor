@@ -12,7 +12,7 @@ function getSelectionText(){
         text = document.selection.createRange().text;
     }
     wordArr = text.replace(/[^a-zA-Z ]/g,'').split(" ").filter(function(n){ 
-        return n != "" 
+        return n != "";
     });
     return wordArr;
 }
@@ -33,13 +33,13 @@ function jQueryMain(){
                     'X-Mashape-Host': "wordsapiv1.p.mashape.com"  
                 },
                 success: function (data) {
-                    console.info("data:")
+                    console.info("data:");
                     console.info(data);
                     for (var i = 0; i < data.synonyms.length; i++) {
                         synList.push(data.synonyms[i]);
                     }
                     console.info("synlist:");
-                    console.info(synList)
+                    console.info(synList);
                 },
                 async: false,
                 error: function (xhr, ajaxOptions, thrownError){
