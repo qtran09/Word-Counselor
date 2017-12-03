@@ -27,7 +27,11 @@ function prepareAndSendMessage(emotions, Text){
 					console.info("synlist:");
 					console.info(synList)
 			    },
-			    async: false
+			    async: false,
+				error: function (xhr, ajaxOptions, thrownError){
+				    console.info(thrownError);
+				}
+
 			});
 			if(typeof synList === 'undefined' || synList.length <= 0)
 				console.info("No synonyms found");
@@ -35,13 +39,13 @@ function prepareAndSendMessage(emotions, Text){
 		}
 	});
 	$.extend({
-		GetMaxWordEmotion: function(Text){
-			console.log("GetMaxWordEmotion");
+		GetEmotionDict: function(Text){
+			console.log("GetEmotionDict");
 			$.ajaxSetup({
 		    async: false
 		    });
 
-		    var maxEmotion = ["test",0];
+		    var jsondict = {};
 
 		    $.ajax({
 			    url: 'https://apiv2.indico.io/emotion',
@@ -59,20 +63,13 @@ function prepareAndSendMessage(emotions, Text){
 			    	//console.info(data);
 					jsono = JSON.parse(data);
 			    	console.info(jsono);
-			    	for (var emot in jsono.results) {
-			    		//console.info("spinmax");
-			    		//console.info(emot);
-						if(jsono.results[emot] > maxEmotion[1]){
-							maxEmotion[1] = jsono.results[emot];
-							maxEmotion[0] = emot;
-						}
-					}
+			    	jsondict = jsono;
 
 			    },
 			    async: false
 			});
 			//console.log(maxEmotion[0]);
-			return maxEmotion[0];
+			return jsondict;
 		}
 	});
 
@@ -96,9 +93,16 @@ function prepareAndSendMessage(emotions, Text){
 
 		for (var k = 0; k < synArr.length; k++) {
 			//console.log("spin2");
-			maxE = $.GetMaxWordEmotion(synArr[k])
-			console.log("maxE:"+maxE);
-			if(maxE == emotion){
+			maxE = $.GetEmotionDict(synArr[k])
+			maxEmotion = ["",0];
+	    	for (var emot in maxE.results) {
+				if(maxE.results[emot] > maxEmotion[1]){
+					maxEmotion[1] = maxE.results[emot];
+					maxEmotion[0] = emot;
+				}
+			}
+			console.log("maxE:"+ maxEmotion[0]);
+			if(maxEmotion[0] == emotion){
 				console.log("Suggested: |" + synArr[k] + "| instead of |" + wordArr[i] + "|");
 			}
 		}
