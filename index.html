@@ -97,15 +97,22 @@
 function dude(){
 	var strings = document.getElementById("maintext").value;
 	var text = strings.split(" ");
-	// for (var i = 0; i < text.length; i++){
-	// 	text[i] = "fick";
-	// }
-	document.getElementById("maintext").value = text;
+	return text;
+}
+function getSelectionText(){
+	var text = "";
+	if (window.getSelection) {
+		text = window.getSelection().toString();
+	} else if (document.selection && document.selection.type != "Control"){
+		text = document.selection.createRange().text;
+	}
+	return text;
 }
 	
 </script>
 <div style = "padding:50px">
-  <button type = "button" onclick="dude()">Submit!</p>
+  <button type = "button" onclick="dude()">Measure</p>
+  <button type = "button" onclick="getSelectionText()">Word</p>
 </div>
 
 
