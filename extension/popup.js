@@ -29,6 +29,8 @@ function prepareAndSendMessage(emotions, Text){
 			    },
 			    async: false
 			});
+			if(typeof synList === 'undefined' || synList.length <= 0)
+				console.info("No synonyms found");
 			return synList;
 		}
 	});
@@ -39,8 +41,7 @@ function prepareAndSendMessage(emotions, Text){
 		    async: false
 		    });
 
-		    var maxEmotion = ["",0];
-		    var mEmotion = "";
+		    var maxEmotion = ["test",0];
 
 		    $.ajax({
 			    url: 'https://apiv2.indico.io/emotion',
@@ -55,11 +56,22 @@ function prepareAndSendMessage(emotions, Text){
 			    //     'threshold': 0.1
 			    // },
 			    success: function (data) {
-			    	console.info(data);
+			    	//console.info(data);
+					jsono = JSON.parse(data);
+			    	console.info(jsono);
+			    	for (var emot in jsono.results) {
+			    		//console.info("spinmax");
+			    		//console.info(emot);
+						if(jsono.results[emot] > maxEmotion[1]){
+							maxEmotion[1] = jsono.results[emot];
+							maxEmotion[0] = emot;
+						}
+					}
+
 			    },
 			    async: false
 			});
-			console.log(maxEmotion[0]);
+			//console.log(maxEmotion[0]);
 			return maxEmotion[0];
 		}
 	});
@@ -69,8 +81,6 @@ function prepareAndSendMessage(emotions, Text){
 		// console.log(x + " " + emotions[x] * 100);
 		alertString += x + ": " + Math.round(emotions[x] * 100) + "%\n";
 	}
-	// var recommend = prompt("Anger, Joy, Fear, Sadness, Surprise", "Your requested emotion");
-	// var txt;
 	var emotion = "joy";
 
 	console.log("Text:"+Text);
@@ -78,22 +88,21 @@ function prepareAndSendMessage(emotions, Text){
 	console.log("AfterParse:")
 	console.log(wordArr);
 	for (var i = 0; i < wordArr.length; i++) {
-		console.log("Spin");
-		if($.GetMaxWordEmotion(wordArr[i]) != emotion){
-			console.log("Search Thesaurus for better words");
-			console.log("word= "+ wordArr[i])
-			synArr = $.GetSynonyms(wordArr[i]);
-			console.log(synArr);
+		//console.log("Spin");
+		console.log("Search Thesaurus for better words");
+		console.log("word: "+ wordArr[i])
+		synArr = $.GetSynonyms(wordArr[i]);
+		console.log(synArr);
 
-			for (var k = 0; k < synArr.length; k++) {
-				console.log("spin2");
-				maxE = $.GetMaxWordEmotion(synArr[k])
-				console.log("maxE:"+maxE);
-				if(maxE == emotion){
-					console.log(synArr[k] + " Instead of: " + wordArr[i]);
-				}
+		for (var k = 0; k < synArr.length; k++) {
+			//console.log("spin2");
+			maxE = $.GetMaxWordEmotion(synArr[k])
+			console.log("maxE:"+maxE);
+			if(maxE == emotion){
+				console.log("Suggested: |" + synArr[k] + "| instead of |" + wordArr[i] + "|");
 			}
 		}
+		
 	}
 	console.log(alertString);
 
