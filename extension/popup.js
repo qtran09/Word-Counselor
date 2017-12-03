@@ -42,44 +42,22 @@ function prepareAndSendMessage(emotions, Text){
 		    var maxEmotion = ["",0];
 		    var mEmotion = "";
 
-		 //    $.ajax({
-			//     url: 'https://apiv2.indico.io/emotion',
-			//     type: 'get',
-			//     dataType: 'json',
-			//     contentType: 'json',
-			//     data: {
-			//         'api_key': "2d3c91cb08abe04e37203439107e5ad6",
-			//         'data': Text,
-			//         'threshold': 0.1
-			//     },
-			//     success: function (data) {
-			//     	console.info("REEEEEEEEEEEEEEEEEEEEEEEEEE");
-			//     },
-			//     async: false
-			// });
-			$.post(
-				'https://apiv2.indico.io/emotion',
-				JSON.stringify({
-					'api_key': "2d3c91cb08abe04e37203439107e5ad6",
-					'data': Text,
-					'threshold': 0.1
-				})
-			).then(function(res) {
-				var emotionDict = {};
-				jsonObject = JSON.parse(res, (key, value) => {
-					if(typeof value === "number"){
-						emotionDict[key] = value;
-					}
-				});
-				console.log(emotionDict);
-				maxEmotion = [0, emotionDict[0]];
-				for(x in emotionDict){
-				// console.log(x + " " + emotions[x] * 100);
-					if(x.length != 0 && emotionDict[x] > maxEmotion)
-						maxEmotion[0] = x;
-						maxEmotion[1] = emotionDict[x];
-				}
-				console.log(maxEmotion[0]);
+		    $.ajax({
+			    url: 'https://apiv2.indico.io/emotion',
+			    type: 'post',
+			    data: JSON.stringify({
+			    	'api_key': "2d3c91cb08abe04e37203439107e5ad6",
+			    	'threshold': 0.1,
+			    	'data' : Text
+			    }),
+			    // headers: {
+			    //     'api_key': "2d3c91cb08abe04e37203439107e5ad6",
+			    //     'threshold': 0.1
+			    // },
+			    success: function (data) {
+			    	console.info(data);
+			    },
+			    async: false
 			});
 			console.log(maxEmotion[0]);
 			return maxEmotion[0];
