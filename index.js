@@ -89,9 +89,9 @@ function jQueryMain(){
 
     console.log("Search Thesaurus for better words");
     var Texta = getSelectionText();
-    if(Texta.length > 1){
+    if(Texta.length != 1){
         console.log(Texta);
-        document.getElementById("RecommendationText").innerHTML = "Please select only one word";
+        document.getElementById("RecommendationText").innerHTML = "Please highlight exactly one word";
         return;
     }
     Text = Texta[0];
@@ -120,7 +120,7 @@ function jQueryMain(){
 
     var recText = "";
     for(var i=0; i<sortedArr.length; i++){
-        recText += ((i+1) + ": " + sortedArr[i][0] + "\n");
+        recText += ((i+1) + ": " + sortedArr[i][0] + "</br>");
     }
     console.log(recText);
     document.getElementById("RecommendationText").innerHTML = recText;
