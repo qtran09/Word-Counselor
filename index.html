@@ -118,14 +118,14 @@ function TextScan(){
 	return text;
 }
 function getSelectionText(){
-	var text = "";
-	if (window.getSelection) {
-		text = window.getSelection().toString();
-	} else if (document.selection && document.selection.type != "Control"){
-		text = document.selection.createRange().text;
-	}
-  wordArr = text.replace(/[^a-zA-Z ]/g,'').split(" ");
-	return wordArr;
+  var text = "";
+  if (window.getSelection) {
+    text = window.getSelection().toString();
+  } else if (document.selection && document.selection.type != "Control"){
+    text = document.selection.createRange().text;
+  }
+  wordArr = text.replace(/[^a-zA-Z ]/g,'').split(" ").filter(function(n){ return n != "" });
+  return wordArr;
 }
 
 
@@ -199,8 +199,11 @@ function jQueryMain(){
 
     console.log("Search Thesaurus for better words");
     var Texta = getSelectionText();
-    if(Texta.length > 1)
+    if(Texta.length > 1){
+      console.log(Texta);
       document.getElementById("RecommendationText").innerHTML = "Please select only one word";
+      return;
+    }
     Text = Texta[0];
     var Emotion = "joy";
     console.log("word: "+ Text);
