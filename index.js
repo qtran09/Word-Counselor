@@ -41,8 +41,8 @@ function jQueryMain(){
                 }
 
             });
-            if(typeof synList === 'undefined' || synList.length <= 0)
-                console.info("No synonyms found");
+            // if(typeof synList === 'undefined' || synList.length <= 0)
+            //     console.info("No synonyms found");
             return synList;
         }
     });
@@ -95,6 +95,10 @@ function jQueryMain(){
     }
     console.log("word: "+ Text);
     synArr = $.GetSynonyms(Text);
+    if(typeof synList === 'undefined' || synList.length <= 0){
+      document.getElementById("RecommendationText").innerHTML = "No synonyms found for word: " + Text;
+      return;
+    }
     console.log(synArr);
 
     emotDict = {};
