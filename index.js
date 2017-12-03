@@ -103,10 +103,12 @@ function jQueryMain(){
     console.log("word: "+ Text);
     synArr = $.GetSynonyms(Text);
     console.log(synArr);
-
+    console.log(Emotion);
     emotDict = {};
     for (var k = 0; k < synArr.length; k++) {
-        emotval = $.GetEmotionDict(synArr[k])[Emotion];
+        emotval = $.GetEmotionDict(synArr[k])["results"][Emotion];
+        console.log("Word:"+synArr[k]);
+        console.log(emotval);
         emotDict[synArr[k]] = emotval;
     }
     var sortedArr = Object.keys(emotDict).map(function(key) {
@@ -118,7 +120,7 @@ function jQueryMain(){
 
     var recText = "";
     for(var i=0; i<sortedArr.length; i++){
-        recText += (sortedArr[i][0] + " ");
+        recText += ((i+1) + ": " + sortedArr[i][0] + "\n");
     }
     console.log(recText);
     document.getElementById("RecommendationText").innerHTML = recText;
