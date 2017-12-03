@@ -84,7 +84,7 @@ function prepareAndSendMessage(emotions, Text){
 	var emotion = "joy";
 
 	console.log("Text:"+Text);
-	wordArr = Text.replace(/\W/g,'').split(" ");
+	wordArr = Text.replace(/[^a-zA-Z ]/g,'').split(" ");
 	console.log("AfterParse:")
 	console.log(wordArr);
 	for (var i = 0; i < wordArr.length; i++) {
