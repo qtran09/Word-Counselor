@@ -84,7 +84,7 @@ function jQueryMain(){
     var Texta = getSelectionText();
     if(Texta.length != 1){
         console.log(Texta);
-        document.getElementById("RecommendationText").innerHTML = "Please select only one word";
+        document.getElementById("RecommendationText").innerHTML = "Please highlight exactly one word";
         return;
     }
     Text = Texta[0];
