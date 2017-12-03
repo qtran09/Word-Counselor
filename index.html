@@ -86,15 +86,26 @@
       <hr>
       <h3>Enter input below</h3>
 
-      <textarea placeholder = "Begin your sentence here..." rows = "5" cols = "120"></textarea>
+      <textarea placeholder = "Begin your sentence here..." rows = "5" cols = "120" id = "maintext">dick dick dick fusss</textarea>
     </div>
     <div style = "padding:15px">
 	<p>DAJfdjshgklhdgdhfdghfdsjgdsjfhgeslijdfhgljsgjkhgflkjdlkjgdslkjdhhshhsdglkjhgkjdfh</p>
 </div>
   </div>
 </div>
+<script>
+function dude(){
+	var strings = document.getElementById("maintext").value;
+	var text = strings.split(" ");
+	// for (var i = 0; i < text.length; i++){
+	// 	text[i] = "fick";
+	// }
+	document.getElementById("maintext").value = text;
+}
+	
+</script>
 <div style = "padding:50px">
-  <button type = "button" onclick = "INSERT YOUR SCRIPT HERE">Submit!</p>
+  <button type = "button" onclick="dude()">Submit!</p>
 </div>
 
 
