@@ -82,7 +82,7 @@ function jQueryMain(){
 
     console.log("Search Thesaurus for better words");
     var Texta = getSelectionText();
-    if(Texta.length > 1){
+    if(Texta.length != 1){
         console.log(Texta);
         document.getElementById("RecommendationText").innerHTML = "Please select only one word";
         return;
@@ -95,7 +95,7 @@ function jQueryMain(){
     }
     console.log("word: "+ Text);
     synArr = $.GetSynonyms(Text);
-    if(typeof synList === 'undefined' || synList.length <= 0){
+    if(typeof synArr === 'undefined' || synArr.length <= 0){
       document.getElementById("RecommendationText").innerHTML = "No synonyms found for word: " + Text;
       return;
     }
@@ -103,7 +103,8 @@ function jQueryMain(){
 
     emotDict = {};
     for (var k = 0; k < synArr.length; k++) {
-        emotval = $.GetEmotionDict(synArr[k])[Emotion];
+        emotval = $.GetEmotionDict(synArr[k])["results"][Emotion];
+        console.log(emotval);
         emotDict[synArr[k]] = emotval;
     }
     var sortedArr = Object.keys(emotDict).map(function(key) {
@@ -115,7 +116,7 @@ function jQueryMain(){
 
     var recText = "";
     for(var i=0; i<sortedArr.length; i++){
-        recText += (sortedArr[i][0] + " </br>");
+        recText += ((i+1) + ": " + sortedArr[i][0] + " </br>");
     }
     console.log(recText);
     document.getElementById("RecommendationText").innerHTML = recText;
