@@ -95,7 +95,11 @@ function jQueryMain(){
         return;
     }
     Text = Texta[0];
-    var Emotion = "joy";
+    var Emotion = document.getElementById("requestEmotion").value
+    if(Emotion == ""){
+      document.getElementById("RecommendationText").innerHTML = "Please select a preferred tone";
+      return;
+    }
     console.log("word: "+ Text);
     synArr = $.GetSynonyms(Text);
     console.log(synArr);
