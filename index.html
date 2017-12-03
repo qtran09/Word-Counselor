@@ -44,14 +44,18 @@
 		position:center;
 		display:block;
 		margin:auto;
-		width:10%;
-		font-size:24px;
-		border-radius:24px;
+		width:100%;
+		font-size:20px;
+		border-radius:20px;
 		transition-duration: 0.4s;
 	}
 	button:hover{
 		background-color:gray;
 		color:white;
+	}
+	select{
+		width:100%;
+		font-size: 13px;
 	}
 	
 	
@@ -80,16 +84,30 @@
 </nav>
 <div class="container-fluid text-center">    
   <div class="row content">
+  <div class = "col-sm-1 sidenav">
+		<div style = "position:center; margin-top:100px">
+			<button type = "button" onclick="TextScan()">Measure</p>
+  			<button type = "button" onclick="jQueryMain()">Word</p>
+		</div>
+		<select id = "requestEmotion">
+			<option value = ""> Please select</option>
+			<option value = "joy">Joy</option>
+			<option value = "sad">Sadness</option>
+			<option value = "surprise">Surprise</option>
+			<option value = "anger">Anger</option>
+			<option value = "fear">Fear</option>
+		</select>
+		</div>
     <div class="text-center" style = "display:block; margin:auto; position:center"> 
       <h1>Hekermenz</h1>
       <p style = "width:67%; display:block; margin:auto; position:center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       <hr>
       <h3>Enter input below</h3>
 
-      <textarea placeholder = "Begin your sentence here..." rows = "5" cols = "120" id = "maintext">dick dick dick fusss</textarea>
+      <textarea placeholder = "Begin your sentence here..." rows = "5" cols = "120" id = "maintext"></textarea>
     </div>
     <div style = "padding:15px">
-	<p id="RecommendationText">DAJfdjshgklhdgdhfdghfdsjgdsjfhgeslijdfhgljsgjkhgflkjdlkjgdslkjdhhshhsdglkjhgkjdfh</p>
+	<p id="RecommendationText"></p>
 </div>
   </div>
 </div>
@@ -217,8 +235,7 @@ function jQueryMain(){
 	
 </script>
 <div style = "padding:50px">
-  <button type = "button" onclick="TextScan()">Measure</p>
-  <button type = "button" onclick="jQueryMain()">Word</p>
+  
 </div>
 
 
